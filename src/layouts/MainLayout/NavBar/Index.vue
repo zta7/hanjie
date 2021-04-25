@@ -8,7 +8,7 @@
     active-bg-color='blue-grey-11'
     class='bg-grey-3 text-grey'
     indicator-color='transparent'>
-    <q-route-tab v-for='e in navBar' :key='e' icon='alarm' :label='e.path' :to='e.path' active-class='text-red' :ripple='false'>
+    <q-route-tab v-for='e in navBar' :key='e' :name='e.path' :label='e.meta.label' :to='e.path' active-class='text-red' :ripple='false'>
       <q-avatar size='xs' icon='close' class='q-ml-md bg-grey-6 text-white' @click.stop.prevent='onDelete(e.path)' />
     </q-route-tab>
   </q-tabs>
@@ -26,9 +26,7 @@ export default {
     const $route = useRoute()
     const $router = useRouter()
     const path = computed(() => $route.path)
-
     const sidebarPaths = sidebarWhitelist.map(e => e.path)
-
     const navBarPath = LocalStorageUtil({
       key: 'navBarPath',
       toValue: [],
@@ -42,7 +40,17 @@ export default {
       immediate: true
     })
 
-    const navBar = computed(() => sidebarWhitelist.filter(r => navBarPath.includes(r.path)))
+    const navBar = computed(() => {
+      return navBarPath.map(p => {
+        const exist = sidebarWhitelist.find(e => e.path === p)
+        if (exist) {
+          return {
+            ...exist
+          }
+        }
+        else undefined
+      }).filter(e => e)
+    })
 
     const onDelete = path => {
       const i = navBarPath.findIndex(e => e === path)
@@ -51,7 +59,7 @@ export default {
         if ($route.path === path) {
           const pushUrl = get(navBarPath, i) || get(navBarPath, i - 1)
           if (pushUrl) $router.push(pushUrl)
-          else $router.push('/')
+          // else $router.push('/')
         }
       }
     }

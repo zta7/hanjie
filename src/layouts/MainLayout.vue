@@ -28,14 +28,33 @@
     </q-drawer>
 
     <q-page-container>
-      <q-page :style-fn='styleFn' class='scroll'>
-        <nav-bar />
-        <router-view />
+      <q-page :style-fn='(offset, height) => { return { height: `${height - offset}px` }}'>
+        <q-layout container class='full-width full-height'>
+          <q-header>
+            <nav-bar />
+          </q-header>
+          <q-page :style-fn='(offset, height) => { return { height: `${height}px` }}'>
+            <q-page-container class='full-width full-height'>
+              <router-view class='full-width full-height' />
+            </q-page-container>
+            <q-page-scroller position='bottom-right' :scroll-offset='150' :offset='[25, 50]' :duration='100'>
+              <q-btn fab icon='keyboard_arrow_up' color='accent' />
+            </q-page-scroller>
+          </q-page>
+        </q-layout>
+
+        <!-- <q-page-sticky position='top' expand>
+          <nav-bar class='full-width' />
+        </q-page-sticky> -->
+        <!-- <router-view style='padding-top: 48px' /> -->
         <!-- <router-view v-slot='{ Component }'>
           <keep-alive :include='["DemandMonitoring"]'>
             <component :is='Component' />
           </keep-alive>
         </router-view> -->
+        <!-- <q-page-sticky position='bottom-right' :offset='[18, 18]' class='z-top'>
+          <q-btn v-show='backToTop' push color='primary' icon='arrow_upward' round @click='onBackToTop()' />
+        </q-page-sticky> -->
       </q-page>
     </q-page-container>
   </q-layout>
@@ -61,14 +80,14 @@ export default {
       })
     }
     return {
-      styleFn(offset, height) {
-        return {
-          height: `${height - offset}px`
-        }
-      },
       changePassword,
       leftDrawerOpen
     }
   }
 }
 </script>
+<style scoped>
+  /* >>>.q-layout-container > div > div {
+    height: 100%
+  } */
+</style>

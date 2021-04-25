@@ -24,8 +24,8 @@ const sidebarRoutes = [
     redirect: '/monitor/wireDiagram',
     component: () => import('layouts/MainLayout.vue'),
     meta: {
-      label: 'monitor',
-      icon: ''
+      label: '监控画面',
+      icon: 'mdi-table-headers-eye'
     },
     children: [
       {
@@ -33,19 +33,27 @@ const sidebarRoutes = [
         path: 'wireDiagram',
         component: () => import('pages/monitor/WireDiagram.vue'),
         meta: {
-          label: 'monitor',
+          label: '接线图',
           icon: ''
         }
       },
       {
         name: 'CommDiagram',
         path: 'commDiagram',
-        component: () => import('pages/monitor/CommDiagram.vue')
+        component: () => import('pages/monitor/CommDiagram.vue'),
+        meta: {
+          label: '通讯状态',
+          icon: ''
+        }
       },
       {
         name: 'Position',
         path: 'position',
-        component: () => import('pages/monitor/Position.vue')
+        component: () => import('pages/monitor/Position.vue'),
+        meta: {
+          label: '地理位置',
+          icon: ''
+        }
       }
     ]
   },
@@ -53,16 +61,28 @@ const sidebarRoutes = [
     path: '/event',
     redirect: '/event/abnormal',
     component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: '事件',
+      icon: 'mdi-kettle-alert-outline'
+    },
     children: [
       {
         name: 'Abnormal',
         path: 'abnormal',
-        component: () => import('pages/event/Abnormal.vue')
+        component: () => import('pages/event/Abnormal.vue'),
+        meta: {
+          label: '异常事件',
+          icon: ''
+        }
       },
       {
         name: 'OperationLog',
         path: 'operationLog',
-        component: () => import('pages/event/OperationLog.vue')
+        component: () => import('pages/event/OperationLog.vue'),
+        meta: {
+          label: '操作日志',
+          icon: ''
+        }
       }
     ]
   },
@@ -70,32 +90,56 @@ const sidebarRoutes = [
     path: '/diagram',
     redirect: '/diagram/electricity',
     component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: '曲线',
+      icon: 'mdi-vector-curve'
+    },
     children: [
       {
         name: 'Electricity',
         path: 'electricity',
-        component: () => import('pages/diagram/Electricity.vue')
+        component: () => import('pages/diagram/Electricity.vue'),
+        meta: {
+          label: '电力监控',
+          icon: ''
+        }
       },
       {
         name: 'Transformer',
         path: 'transformer',
-        component: () => import('pages/diagram/Transformer.vue')
+        component: () => import('pages/diagram/Transformer.vue'),
+        meta: {
+          label: '变压器监控',
+          icon: ''
+        }
       }
     ]
   },
   {
     path: '/report',
     component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: '报表统计',
+      icon: 'mdi-file-table-box-multiple-outline'
+    },
     children: [
       {
         name: 'Report',
         path: '',
-        component: () => import('pages/report/')
+        component: () => import('pages/report/'),
+        meta: {
+          label: '报表统计',
+          icon: ''
+        }
       },
       {
         name: 'DemandMonitoring',
         path: 'demandMonitoring',
-        component: () => import('pages/report/DemandMonitoring.vue')
+        component: () => import('pages/report/DemandMonitoring.vue'),
+        meta: {
+          label: '需量监控',
+          icon: ''
+        }
       }
     ]
   },
@@ -103,22 +147,42 @@ const sidebarRoutes = [
     path: '/dataManagement',
     redirect: '/dataManagement/project',
     component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: '基础数据管理',
+      icon: 'mdi-database-cog-outline'
+    },
     children: [
       {
         path: 'project',
-        component: () => import('pages/dataManagement/project.vue')
+        component: () => import('pages/dataManagement/project.vue'),
+        meta: {
+          label: '项目管理',
+          icon: ''
+        }
       },
       {
         path: 'plantStation',
-        component: () => import('pages/dataManagement/plantStation.vue')
+        component: () => import('pages/dataManagement/plantStation.vue'),
+        meta: {
+          label: '厂站管理',
+          icon: ''
+        }
       },
       {
         path: 'device',
-        component: () => import('pages/dataManagement/device.vue')
+        component: () => import('pages/dataManagement/device.vue'),
+        meta: {
+          label: '设备管理',
+          icon: ''
+        }
       },
       {
         path: 'parameter',
-        component: () => import('pages/dataManagement/parameter.vue')
+        component: () => import('pages/dataManagement/parameter.vue'),
+        meta: {
+          label: '参数管理',
+          icon: ''
+        }
       }
     ]
   }

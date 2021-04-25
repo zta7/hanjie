@@ -4,17 +4,17 @@
     :group='inset + ""'
     :header-inset-level='inset'
     expand-separator
-    icon='receipt'
-    :label='item.path'
+    :icon='item.meta.icon'
+    :label='item.meta.label'
     default-opened>
-    <sidebar-item v-for='e in item.children' :key='e.path' :item='e' :inset='inset + 0.5' :pre-path='p' />
+    <sidebar-item v-for='e in item.children' :key='e.path' :item='e' :inset='inset + 0.55' :pre-path='p' />
   </q-expansion-item>
   <q-item v-else :inset-level='inset' clickable :to='p' exact>
-    <q-item-section avatar>
-      <q-icon name='add' />
+    <q-item-section thumbnail>
+      <q-icon name='' />
     </q-item-section>
     <q-item-section>
-      {{ p }}
+      {{ item.meta.label }}
     </q-item-section>
   </q-item>
 </template>
