@@ -1,6 +1,7 @@
 <template>
   <q-tabs
     inline-label
+    dense
     no-caps
     align='left'
     outside-arrows
@@ -12,7 +13,6 @@
       <q-avatar size='xs' icon='close' class='q-ml-md bg-grey-6 text-white' @click.stop.prevent='onDelete(e.path)' />
     </q-route-tab>
   </q-tabs>
-  <q-separator />
 </template>
 <script>
 import LocalStorageUtil from 'utils/LocalStorage.js'

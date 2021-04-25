@@ -83,8 +83,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-  /* >>>.q-layout-container > div > div {
-    height: 100%
-  } */
-</style>
