@@ -1,5 +1,5 @@
 <template>
-  <q-list bordered class='no-border'>
+  <q-list class='no-border'>
     <sidebar-item
       v-for='s in sidebarRoutes'
       :key='s.path'

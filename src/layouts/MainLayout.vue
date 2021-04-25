@@ -37,9 +37,6 @@
             <q-page-container class='full-width full-height'>
               <router-view class='full-width full-height' />
             </q-page-container>
-            <q-page-scroller position='bottom-right' :scroll-offset='150' :offset='[25, 50]' :duration='100'>
-              <q-btn fab icon='keyboard_arrow_up' color='accent' />
-            </q-page-scroller>
           </q-page>
         </q-layout>
 
