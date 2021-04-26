@@ -12,20 +12,18 @@
           <q-btn flat icon-right='expand_more' label='ZTA'>
             <q-menu>
               <q-list style='min-width: 100px'>
-                <q-item v-close-popup clickable @click='changePassword'>
+                <q-item v-close-popup clickable @click='onChangePassword'>
                   <q-item-section>修改密码</q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
           </q-btn>
-          <q-btn flat icon='logout' label='退出' />
+          <q-btn flat icon='logout' label='退出' @click='onLogout' />
         </q-btn-group>
       </q-toolbar>
     </q-header>
 
-    <q-drawer :model-value='leftDrawerOpen' side='left' bordered behavior='desktop'>
-      <left-drawer />
-    </q-drawer>
+    <left-drawer />
 
     <q-page-container>
       <q-page :style-fn='(offset, height) => { return { height: `${height - offset}px` }}'>
@@ -58,11 +56,11 @@
 </template>
 
 <script>
-import { ref } from 'vue'
 import changePasswordDialog from 'components/Dialogs/ChangePassword.vue'
 import leftDrawer from './MainLayout/LeftDrawer/'
 import navBar from './MainLayout/NavBar/'
 import { Dialog } from 'quasar'
+import confirmDialog from 'components/Dialogs/Confirm'
 
 export default {
   components: {
@@ -70,15 +68,25 @@ export default {
     navBar
   },
   setup() {
-    const leftDrawerOpen = ref(true)
-    const changePassword = () => {
+    const onChangePassword = () => {
       Dialog.create({
         component: changePasswordDialog
       })
     }
+    const onLogout = () => {
+      Dialog.create({
+        component: confirmDialog,
+        componentProps: {
+          content: '确认登出当前账号 ?',
+          confirmBtnLabel: '登出'
+        }
+      }).onOk(() => {
+        // do logout
+      })
+    }
     return {
-      changePassword,
-      leftDrawerOpen
+      onLogout,
+      onChangePassword
     }
   }
 }

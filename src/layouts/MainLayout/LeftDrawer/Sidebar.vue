@@ -1,5 +1,7 @@
 <template>
   <q-list class='no-border'>
+    <q-avatar icon='menu' class='full-width cursor-pointer' @click='onMenuClick()' />
+    <q-separator />
     <sidebar-item
       v-for='s in sidebarRoutes'
       :key='s.path'
@@ -13,9 +15,13 @@ export default {
   components: {
     sidebarItem
   },
-  setup() {
+  emits: ['update:mini'],
+  setup(props, { emit }) {
     return {
-      sidebarRoutes
+      sidebarRoutes,
+      onMenuClick() {
+        emit('update:mini', true)
+      }
     }
   }
 }

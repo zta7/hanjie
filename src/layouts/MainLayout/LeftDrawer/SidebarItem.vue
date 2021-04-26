@@ -3,10 +3,8 @@
     v-if='item.children'
     :group='inset + ""'
     :header-inset-level='inset'
-    expand-separator
     :icon='item.meta.icon'
-    :label='item.meta.label'
-    default-opened>
+    :label='item.meta.label'>
     <sidebar-item v-for='e in item.children' :key='e.path' :item='e' :inset='inset + 0.55' :pre-path='p' />
   </q-expansion-item>
   <q-item v-else :inset-level='inset' clickable :to='p' exact>

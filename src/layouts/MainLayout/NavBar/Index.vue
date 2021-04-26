@@ -1,7 +1,6 @@
 <template>
   <q-tabs
     inline-label
-    dense
     no-caps
     align='left'
     outside-arrows
@@ -9,8 +8,8 @@
     active-bg-color='blue-grey-11'
     class='bg-grey-3 text-grey'
     indicator-color='transparent'>
-    <q-route-tab v-for='e in navBar' :key='e' :name='e.path' :label='e.meta.label' :to='e.path' active-class='text-red' :ripple='false'>
-      <q-avatar size='xs' icon='close' class='q-ml-md bg-grey-6 text-white' @click.stop.prevent='onDelete(e.path)' />
+    <q-route-tab v-for='e in navBar' :key='e' :name='e.path' :label='e.meta.label' :to='e.path' :ripple='false'>
+      <q-avatar v-if='!e.meta.affix' size='xs' icon='close' class='q-ml-md bg-grey-6 text-white' @click.prevent='onDelete(e.path)' />
     </q-route-tab>
   </q-tabs>
 </template>
@@ -26,7 +25,6 @@ export default {
     const $route = useRoute()
     const $router = useRouter()
     const path = computed(() => $route.path)
-    const sidebarPaths = sidebarWhitelist.map(e => e.path)
     const navBarPath = LocalStorageUtil({
       key: 'navBarPath',
       toValue: [],
@@ -35,12 +33,17 @@ export default {
 
     watch(path, n => {
       const exist = navBarPath.find(e => e === n)
-      if (!exist && sidebarPaths.includes(n)) navBarPath.push(n)
+      const target = sidebarWhitelist.find(e => e.path === n)
+      if (!exist && target && !target.meta.affix) navBarPath.push(n)
     }, {
       immediate: true
     })
 
     const navBar = computed(() => {
+      // return sidebarWhitelist
+      //   .filter(e => navBarPath.includes(e.path) || e.meta.affix)
+      //   .sort((a, b) => !a.meta.affix && b.meta.affix ? 1 : -1)
+
       return navBarPath.map(p => {
         const exist = sidebarWhitelist.find(e => e.path === p)
         if (exist) {
@@ -50,6 +53,7 @@ export default {
         }
         else undefined
       }).filter(e => e)
+      // .sort((a, b) => !a.meta.affix && b.meta.affix ? 1 : -1)
     })
 
     const onDelete = path => {

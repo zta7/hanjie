@@ -1,17 +1,27 @@
 <template>
-  <z-sidebar />
+  <q-drawer :model-value='true' side='left' bordered behavior='desktop' :mini='mini'>
+    <side-bar @update:mini='v => updateMini(v)' />
+    <template #mini>
+      <side-bar-mini @update:mini='v => updateMini(v)' />
+    </template>
+  </q-drawer>
 </template>
 <script>
-import { sidebarRoutes } from 'router/routes.js'
-import ZSidebar from './Sidebar.vue'
+import SideBar from './Sidebar.vue'
+import SideBarMini from './SidebarMini.vue'
+import { ref } from 'vue'
 export default {
   components: {
-    ZSidebar
+    SideBar,
+    SideBarMini
   },
   setup() {
-    // console.log(sidebarRoutes)
+    const mini = ref(true)
     return {
-      sidebarRoutes
+      mini,
+      updateMini(v) {
+        mini.value = v
+      }
     }
   }
 }
