@@ -16,7 +16,7 @@
 <script>
 import LocalStorageUtil from 'utils/LocalStorage.js'
 import { isArray, get } from 'lodash'
-import { watch, computed } from 'vue'
+import { watch, computed, shallowReactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { sidebarWhitelist } from 'router/routes'
 
@@ -31,42 +31,34 @@ export default {
       validateFn: v => isArray(v)
     })
 
+    // 初始化
+    const affix = sidebarWhitelist.filter(e => e.meta.affix)
+    const opened = sidebarWhitelist.filter(e => !e.meta.affix && navBarPath.value.includes(e.path))
+    const navBar = shallowReactive(affix.concat(opened))
+
     watch(path, n => {
-      const exist = navBarPath.find(e => e === n)
+      const exist = navBar.find(e => e.path === n)
       const target = sidebarWhitelist.find(e => e.path === n)
-      if (!exist && target && !target.meta.affix) navBarPath.push(n)
+      if (!exist && target) navBar.push(target)
     }, {
       immediate: true
     })
 
-    const navBar = computed(() => {
-      // return sidebarWhitelist
-      //   .filter(e => navBarPath.includes(e.path) || e.meta.affix)
-      //   .sort((a, b) => !a.meta.affix && b.meta.affix ? 1 : -1)
-
-      return navBarPath.map(p => {
-        const exist = sidebarWhitelist.find(e => e.path === p)
-        if (exist) {
-          return {
-            ...exist
-          }
-        }
-        else undefined
-      }).filter(e => e)
-      // .sort((a, b) => !a.meta.affix && b.meta.affix ? 1 : -1)
-    })
-
     const onDelete = path => {
-      const i = navBarPath.findIndex(e => e === path)
+      const i = navBar.findIndex(e => e.path === path)
       if (i !== -1) {
-        navBarPath.splice(i, 1)
+        navBar.splice(i, 1)
         if ($route.path === path) {
-          const pushUrl = get(navBarPath, i) || get(navBarPath, i - 1)
+          const pushUrl = get(navBar, `[${i}].path`) || get(navBar, `[${i - 1}].path`)
           if (pushUrl) $router.push(pushUrl)
-          // else $router.push('/')
         }
       }
     }
+
+    watch(navBar, n => {
+      navBarPath.value = n.filter(e => !e.meta.affix).map(e => e.path)
+    })
+
     return {
       onDelete,
       navBar,

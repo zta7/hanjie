@@ -74,7 +74,15 @@ module.exports = configure(ctx => {
           utils: path.resolve(__dirname, './src/utils'),
           boot: path.resolve(__dirname, './src/boot'),
           components: path.resolve(__dirname, './src/components')
+
+          // snapsvg: 'snapsvg/dist/snap.svg.js'
         }
+        // cfg.module.rules.push(
+        //   {
+        //     test: require.resolve('snapsvg/dist/snap.svg.js'),
+        //     use: 'imports-loader?wrapper=window&additionalCode=module.exports=0;'
+        //   }
+        // )
       },
       // https://v2.quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
