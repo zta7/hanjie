@@ -8,18 +8,7 @@
           </q-avatar>
         </q-toolbar-title>
         <q-space />
-        <q-btn-group flat>
-          <q-btn flat icon-right='expand_more' label='ZTA'>
-            <q-menu>
-              <q-list style='min-width: 100px'>
-                <q-item v-close-popup clickable @click='onChangePassword'>
-                  <q-item-section>修改密码</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-          <q-btn flat icon='logout' label='退出' @click='onLogout' />
-        </q-btn-group>
+        <right-bar />
       </q-toolbar>
     </q-header>
 
@@ -56,38 +45,15 @@
 </template>
 
 <script>
-import changePasswordDialog from 'components/Dialogs/ChangePassword.vue'
 import leftDrawer from './MainLayout/LeftDrawer/'
 import navBar from './MainLayout/NavBar/'
-import { Dialog } from 'quasar'
-import confirmDialog from 'components/Dialogs/Confirm'
+import rightBar from './MainLayout/RightBar/'
 
 export default {
   components: {
     leftDrawer,
-    navBar
-  },
-  setup() {
-    const onChangePassword = () => {
-      Dialog.create({
-        component: changePasswordDialog
-      })
-    }
-    const onLogout = () => {
-      Dialog.create({
-        component: confirmDialog,
-        componentProps: {
-          content: '确认登出当前账号 ?',
-          confirmBtnLabel: '登出'
-        }
-      }).onOk(() => {
-        // do logout
-      })
-    }
-    return {
-      onLogout,
-      onChangePassword
-    }
+    navBar,
+    rightBar
   }
 }
 </script>
