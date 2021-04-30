@@ -10,6 +10,8 @@
 import SideBar from './Sidebar.vue'
 import SideBarMini from './SidebarMini.vue'
 import { ref } from 'vue'
+import { setCssVar } from 'quasar'
+
 export default {
   components: {
     SideBar,

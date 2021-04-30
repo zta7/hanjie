@@ -1,10 +1,10 @@
 <template>
   <q-layout view='hHh lpR fFf'>
-    <q-header bordered class='bg-primary text-white'>
+    <q-header bordered>
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
-            <img src='https://cdn.quasar.dev/logo/svg/quasar-logo.svg'>
+            L
           </q-avatar>
         </q-toolbar-title>
         <q-space />

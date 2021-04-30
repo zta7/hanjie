@@ -13,9 +13,12 @@
     "@quasar/extras": "^1.0.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "fabric": "^4.4.0",
+    "gojs": "^2.1.38",
     "lodash": "^4.17.21",
     "quasar": "^2.0.0-beta.1",
     "snapsvg": "^0.5.1",
+    "snapsvg-cjs": "0.0.6",
     "vue-i18n": "^9.0.0-beta.0"
   },
   "devDependencies": {
