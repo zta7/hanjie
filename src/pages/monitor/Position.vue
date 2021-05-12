@@ -2,18 +2,24 @@
   <div id='map' />
 </template>
 <script>
-import { defineComponent, onMounted } from 'vue'
+import { defineComponent, onMounted, onActivated } from 'vue'
 
 export default defineComponent({
+  name: 'Position',
   /* eslint-disable no-undef */
   setup() {
+    let m
     onMounted(() => {
-      new AMap.Map('map', {
-        zoom: 11, // 级别
-        center: [116.397428, 39.90923], // 中心点坐标
-        viewMode: '3D'// 使用3D视图
+      m = new AMap.Map('map', {
+        center: [117.000923, 36.675807],
+        zoom: 11
+      })
+      onActivated(() => {
+        m.setZoom(20)
+        console.log('yeah')
       })
     })
+
     return {
 
     }

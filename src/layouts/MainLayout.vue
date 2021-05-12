@@ -22,7 +22,11 @@
           </q-header>
           <q-page :style-fn='(offset, height) => { return { height: `${height}px` }}'>
             <q-page-container class='full-width full-height'>
-              <router-view class='full-width full-height' />
+              <router-view v-slot='{ Component }' class='full-width full-height'>
+                <keep-alive :include='["DemandMonitoring", "Position"]'>
+                  <component :is='Component' />
+                </keep-alive>
+              </router-view>
             </q-page-container>
           </q-page>
         </q-layout>
