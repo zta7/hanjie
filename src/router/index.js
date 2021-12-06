@@ -11,10 +11,19 @@ import routes from './routes'
  * with the Router instance.
  */
 
+const createHistory = process.env.SERVER
+  ? createMemoryHistory
+  : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory
+
+const allRoutesRouter = createRouter({
+  routes,
+  history: createHistory(process.env.MODE === 'ssr' ? void 0 : process.env.VUE_ROUTER_BASE)
+})
+
 export default route((/* { store, ssrContext } */) => {
-  const createHistory = process.env.SERVER
-    ? createMemoryHistory
-    : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory
+  // const createHistory = process.env.SERVER
+  //   ? createMemoryHistory
+  //   : process.env.VUE_ROUTER_MODE === 'history' ? createWebHistory : createWebHashHistory
 
   const Router = createRouter({
     scrollBehavior: () => ({
@@ -31,3 +40,5 @@ export default route((/* { store, ssrContext } */) => {
 
   return Router
 })
+
+export { allRoutesRouter }

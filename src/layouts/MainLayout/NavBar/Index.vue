@@ -3,72 +3,88 @@
     inline-label
     no-caps
     align='left'
+    :breakpoint='0'
     outside-arrows
-    active-color='black'
-    active-bg-color='blue-grey-11'
-    class='bg-grey-3 text-grey'
-    indicator-color='transparent'>
-    <q-route-tab v-for='e in navBar' :key='e' :name='e.path' :label='e.meta.label' :to='e.path' :ripple='false'>
-      <q-avatar v-if='!e.meta.affix' size='xs' icon='close' class='q-ml-md bg-grey-6 text-white' @click.prevent='onDelete(e.path)' />
+    v-bind='$store.state.component.navbar'
+    indicator-color='primary'>
+    <q-route-tab v-for='e in navbarRoutes' :key='e' :name='e.path' :label='$t(`nav.${e.meta.label}`)' :to='e.path' :ripple='false'>
+      <q-icon v-if='!e.meta.affix' name='close' @click.prevent='onDelete(e.path)' />
     </q-route-tab>
   </q-tabs>
 </template>
 <script>
-import LocalStorageUtil from 'utils/LocalStorage.js'
-import { isArray, get } from 'lodash'
-import { watch, computed, shallowReactive } from 'vue'
+import { get, uniqBy } from 'lodash'
+import { watch, computed, defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { sidebarWhitelist } from 'router/routes'
+import { useStore } from 'vuex'
 
-export default {
+export default defineComponent({
   setup() {
     const $route = useRoute()
     const $router = useRouter()
+    const $store = useStore()
+
     const path = computed(() => $route.path)
-    const navBarPath = LocalStorageUtil({
-      key: 'navBarPath',
-      toValue: [],
-      validateFn: v => isArray(v)
+    const navbar = computed({
+      get: () => $store.state.ls.navbar,
+      set: v => $store.commit('ls/SET', ['navbar', v])
+    })
+    const navbarRoutes = computed(() => {
+      let result = []
+      result = $router.getRoutes().filter(e => e.meta.affix)
+      const routes = $router.getRoutes()
+      navbar.value.forEach(e => {
+        const route = routes.find(r => r.path === e)
+        if (route) result.push(route)
+      })
+
+      return uniqBy(result, 'path')
     })
 
-    // 初始化
-    const affix = sidebarWhitelist.filter(e => e.meta.affix)
-    const opened = sidebarWhitelist.filter(e => !e.meta.affix && navBarPath.value.includes(e.path))
-    const navBar = shallowReactive(affix.concat(opened))
-
     watch(path, n => {
-      const exist = navBar.find(e => e.path === n)
-      const target = sidebarWhitelist.find(e => e.path === n)
-      if (!exist && target) navBar.push(target)
+      const exist = navbar.value.find(e => e === n)
+      if (!exist) {
+        const route = $router.getRoutes().find(e => e.path === n)
+        if (route && route.meta && route.meta.label) navbar.value = [...navbar.value, n]
+      }
     }, {
       immediate: true
     })
 
     const onDelete = path => {
-      const i = navBar.findIndex(e => e.path === path)
+      const i = navbar.value.findIndex(e => e === path)
       if (i !== -1) {
-        navBar.splice(i, 1)
+        navbar.value = navbar.value.filter(e => e !== path)
         if ($route.path === path) {
-          const pushUrl = get(navBar, `[${i}].path`) || get(navBar, `[${i - 1}].path`)
+          const pushUrl = get(navbar.value, `${i}`) || get(navbar.value, `${i - 1}`)
           if (pushUrl) $router.push(pushUrl)
         }
       }
     }
 
-    watch(navBar, n => {
-      navBarPath.value = n.filter(e => !e.meta.affix).map(e => e.path)
-    })
-
     return {
       onDelete,
-      navBar,
-      navBarPath
+      navbarRoutes
     }
   }
-}
+})
 </script>
-<style scoped>
- >>>.q-icon:hover {
-    color: red
+<style lang="scss" scoped>
+  .q-tab{
+    &:hover{
+      .q-icon {
+        opacity: 1;
+      }
+    }
+    .q-icon {
+      &:hover {
+        color: red;
+      }
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      right: -16px;
+      transform: translate(0%, -50%);
+    }
   }
 </style>

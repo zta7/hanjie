@@ -21,9 +21,13 @@ module.exports = {
     require: true,
     path: true,
     $: true,
+    $_: true,
+    $t: true,
     go: true,
     RegExp: true,
-    Snap: true
+    Snap: true,
+    AMap: true,
+    Loca: true
   },
   plugins: [
     // https://eslint.vuejs.org/user-guide/#why-doesn-t-it-work-on-vue-file
@@ -95,7 +99,7 @@ module.exports = {
     'keyword-spacing': [2], // 关键字空格
     'key-spacing': [2], // 对象 key value 排版
     'new-parens': [2], // 调用无参构造有括号
-    'newline-per-chained-call': [2], // 方法函数链换行
+    'newline-per-chained-call': [2, {"ignoreChainWithDepth": 4}], // 方法函数链换行
     'no-array-constructor': [2], 
     'no-lonely-if': [0],
     'no-multi-assign': [2],

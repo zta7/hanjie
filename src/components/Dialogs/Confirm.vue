@@ -3,11 +3,11 @@
     <q-card class='q-dialog-plugin' style='width: 320px'>
       <q-card-section />
       <q-card-section>
-        {{ content }}
+        {{ $t(content) }}
       </q-card-section>
       <q-card-actions align='right'>
-        <q-btn label='Cancel' flat @click='onDialogHide' />
-        <q-btn :label='confirmBtnLabel' flat @click='onOKClick' />
+        <q-btn :label='$t("cancel")' color='negative' @click='onDialogHide' />
+        <q-btn :label='$t(confirmBtnLabel)' color='primary' @click='onOKClick' />
       </q-card-actions>
     </q-card>
   </q-dialog>
@@ -25,7 +25,7 @@ export default {
     confirmBtnLabel: {
       type: String,
       required: false,
-      default: 'Confirm'
+      default: 'confirm'
     }
   },
 

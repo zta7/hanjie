@@ -1,63 +1,55 @@
 <template>
   <q-layout view='hHh lpR fFf'>
-    <q-header bordered>
+    <q-header v-bind='$store.state.component.header'>
       <q-toolbar>
-        <q-toolbar-title>
-          <q-avatar>
-            L
-          </q-avatar>
+        <q-toolbar-title class='text-bold'>
+          车身焊点质量监控系统
         </q-toolbar-title>
         <q-space />
         <right-bar />
       </q-toolbar>
+      <!-- <q-separator v-bind='$store.state.component.separator' /> -->
     </q-header>
 
     <left-drawer />
 
     <q-page-container>
-      <q-page :style-fn='(offset, height) => { return { height: `${height - offset}px` }}'>
-        <q-layout container class='full-width full-height'>
-          <q-header>
+      <q-page
+        :style-fn='(offset, height) => { return { height: `${height - offset}px` }}'>
+        <q-layout
+          view='hHh lpR fFf'
+          container
+          class='full-width full-height'>
+          <q-header class='shadow-1'>
             <nav-bar />
+            <!-- <q-separator v-bind='$store.state.component.separator' /> -->
           </q-header>
-          <q-page :style-fn='(offset, height) => { return { height: `${height}px` }}'>
-            <q-page-container class='full-width full-height'>
-              <router-view v-slot='{ Component }' class='full-width full-height'>
-                <keep-alive :include='["DemandMonitoring", "Position"]'>
-                  <component :is='Component' />
-                </keep-alive>
+          <q-page-container>
+            <q-page :style-fn='(offset, height) => { return { height: `${height - offset}px` }}'>
+              <router-view v-slot='{ Component }' class='absolute-full'>
+                <!-- <keep-alive> -->
+                <component :is='Component' id='content' style='transform: scale(1)' />
+                <!-- </keep-alive> -->
               </router-view>
-            </q-page-container>
-          </q-page>
+            </q-page>
+          </q-page-container>
         </q-layout>
-
-        <!-- <q-page-sticky position='top' expand>
-          <nav-bar class='full-width' />
-        </q-page-sticky> -->
-        <!-- <router-view style='padding-top: 48px' /> -->
-        <!-- <router-view v-slot='{ Component }'>
-          <keep-alive :include='["DemandMonitoring"]'>
-            <component :is='Component' />
-          </keep-alive>
-        </router-view> -->
-        <!-- <q-page-sticky position='bottom-right' :offset='[18, 18]' class='z-top'>
-          <q-btn v-show='backToTop' push color='primary' icon='arrow_upward' round @click='onBackToTop()' />
-        </q-page-sticky> -->
       </q-page>
     </q-page-container>
   </q-layout>
 </template>
 
 <script>
-import leftDrawer from './MainLayout/LeftDrawer/'
-import navBar from './MainLayout/NavBar/'
-import rightBar from './MainLayout/RightBar/'
+import leftDrawer from './MainLayout/LeftDrawer/Index.vue'
+import navBar from './MainLayout/NavBar/Index.vue'
+import rightBar from './MainLayout/RightBar/Index.vue'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   components: {
     leftDrawer,
     navBar,
     rightBar
   }
-}
+})
 </script>

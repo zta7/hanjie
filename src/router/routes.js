@@ -18,170 +18,275 @@
     activeMenu: '/example/list'  if set path, the sidebar will highlight the path you set
   }
  */
+
 const sidebarRoutes = [
   {
-    path: '/monitor',
-    redirect: '/monitor/wireDiagram',
+    path: '/',
+    hidden: true,
+    // q-tree 属性
+    redirect: '/index',
+    name: 'IndexWrapper',
     component: () => import('layouts/MainLayout.vue'),
     meta: {
-      label: '监控画面',
-      icon: 'mdi-table-headers-eye'
+      label: '',
+      icon: ''
     },
     children: [
       {
-        name: 'WireDiagram',
-        path: 'wireDiagram',
-        component: () => import('pages/monitor/WireDiagram.vue'),
+        path: 'index',
+        name: 'Index',
+        disabled: true,
+        component: () => import('pages/Index.vue'),
         meta: {
-          label: '接线图',
-          icon: '',
+          label: 'index',
+          icon: 'home',
           affix: true
         }
+      }
+    ]
+  },
+  {
+    path: '/collection',
+    redirect: '/index',
+    name: 'Collection',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: 'collection',
+      icon: 'analytics'
+    },
+    children: [
+      {
+        path: 'control',
+        name: 'CollectionControl',
+        disabled: true,
+        component: () => import('pages/collection/Control.vue'),
+        meta: {
+          label: 'control',
+          icon: 'settings'
+        }
       },
       {
-        name: 'CommDiagram',
-        path: 'commDiagram',
-        component: () => import('pages/monitor/CommDiagram.vue'),
+        path: 'model',
+        name: 'CollectionModel',
+        disabled: true,
+        component: () => import('pages/collection/Model.vue'),
         meta: {
-          label: '通讯状态',
+          label: 'model',
+          icon: 'directions_car_filled'
+        }
+      },
+
+      {
+        path: 'signalCollector',
+        name: 'SignalCollector',
+        disabled: true,
+        component: () => import('pages/collection/SignalCollector.vue'),
+        meta: {
+          label: 'signalCollector',
+          icon: 'directions_car_filled'
+        }
+      },
+
+      {
+        path: 'signal',
+        name: 'Signal',
+        disabled: true,
+        component: () => import('pages/collection/Signal.vue'),
+        meta: {
+          label: 'signal',
+          icon: 'directions_car_filled'
+        }
+      },
+
+      {
+        path: 'station',
+        name: 'Station',
+        disabled: true,
+        component: () => import('pages/collection/Station.vue'),
+        meta: {
+          label: 'station',
+          icon: 'directions_car_filled'
+        }
+      },
+
+      {
+        path: 'viewRCollector',
+        name: 'ViewRCollector',
+        disabled: true,
+        component: () => import('pages/collection/ViewRCollector.vue'),
+        meta: {
+          label: 'viewRCollector',
+          icon: 'directions_car_filled'
+        }
+      },
+
+      {
+        path: 'welder',
+        name: 'Welder',
+        disabled: true,
+        component: () => import('pages/collection/Welder.vue'),
+        meta: {
+          label: 'welder',
+          icon: 'directions_car_filled'
+        }
+      },
+
+      {
+        path: 'solderJoint',
+        name: 'SolderJoint',
+        disabled: true,
+        component: () => import('pages/collection/SolderJoint.vue'),
+        meta: {
+          label: 'solderJoint',
+          icon: 'directions_car_filled'
+        }
+      }
+    ]
+  },
+  // {
+  //   path: '/system',
+  //   name: 'System',
+  //   redirect: '/system/account',
+  //   component: () => import('layouts/MainLayout.vue'),
+  //   meta: {
+  //     label: 'system',
+  //     icon: 'mdi-table-headers-eye'
+  //   },
+  //   children: [
+  //     {
+  //       path: 'department',
+  //       name: 'SystemDepartment',
+  //       component: () => import('src/pages/system/Department.vue'),
+  //       roles: ['admin'],
+  //       meta: {
+  //         label: 'department',
+  //         icon: 'business'
+  //       }
+  //     },
+  //     {
+  //       path: 'customer',
+  //       name: 'SystemCustomer',
+  //       component: () => import('pages/system/Customer.vue'),
+  //       meta: {
+  //         label: 'customer',
+  //         icon: 'manage_accounts'
+  //       }
+  //     },
+  //     {
+  //       path: 'role',
+  //       name: 'SystemRole',
+  //       component: () => import('pages/system/Role.vue'),
+  //       meta: {
+  //         label: 'roleManage',
+  //         icon: 'fingerprint'
+  //       }
+  //     },
+  //     {
+  //       path: 'gateway/manage',
+  //       name: 'SystemGatewayManage',
+  //       component: () => import('src/pages/system/GatewayManage.vue'),
+  //       meta: {
+  //         label: 'gatewayManage',
+  //         icon: 'wifi'
+  //       }
+  //     },
+  //     {
+  //       path: 'device/manage',
+  //       name: 'SystemDeviceManage',
+  //       component: () => import('pages/system/DeviceManage.vue'),
+  //       meta: {
+  //         label: 'deviceManage',
+  //         icon: 'devices'
+  //       }
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/event',
+  //   redirect: '/event/inquire',
+  //   name: 'Event',
+  //   component: () => import('layouts/MainLayout.vue'),
+  //   meta: {
+  //     label: 'event',
+  //     icon: 'mdi-kettle-alert-outline'
+  //   },
+  //   children: [
+  //     {
+  //       name: 'EventInquire',
+  //       path: 'inquire',
+  //       component: () => import('pages/event/Inquire.vue'),
+  //       meta: {
+  //         label: 'eventInquire',
+  //         icon: 'policy'
+  //       }
+  //     },
+  //     {
+  //       name: 'EventHandle',
+  //       path: 'handle',
+  //       component: () => import('pages/event/Handle.vue'),
+  //       meta: {
+  //         label: 'eventHandle',
+  //         icon: 'assignment_late'
+  //       }
+  //     }
+  //   ]
+  // },
+  {
+    path: '/monitor',
+    name: 'Monitor',
+    redirect: '/monitor/featureDisplay',
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: 'monitor',
+      icon: 'bar_chart'
+    },
+    children: [
+      {
+        name: 'FeatureDisplay',
+        path: 'featureDisplay',
+        component: () => import('pages/monitor/FeatureDisplay.vue'),
+        meta: {
+          label: 'featureDisplay',
           icon: ''
         }
       },
       {
-        name: 'Position',
-        path: 'position',
-        component: () => import('pages/monitor/Position.vue'),
+        name: 'QualityJudgment',
+        path: 'qualityJudgment',
+        component: () => import('pages/monitor/QualityJudgment.vue'),
         meta: {
-          label: '地理位置',
+          label: 'qualityJudgment',
+          icon: ''
+        }
+      },
+      {
+        name: 'RealTimeData',
+        path: 'realTimeData',
+        component: () => import('pages/monitor/RealTimeData.vue'),
+        meta: {
+          label: 'realTimeData',
           icon: ''
         }
       }
     ]
   },
+
   {
-    path: '/event',
-    redirect: '/event/abnormal',
+    path: '/analysis',
+    name: 'Analysis',
+    redirect: '/monitor/featureDisplay',
     component: () => import('layouts/MainLayout.vue'),
     meta: {
-      label: '事件',
-      icon: 'mdi-kettle-alert-outline'
+      label: 'monitor',
+      icon: 'bar_chart'
     },
     children: [
       {
-        name: 'Abnormal',
-        path: 'abnormal',
-        component: () => import('pages/event/Abnormal.vue'),
+        name: 'ModelTrain',
+        path: 'modelTrain',
+        component: () => import('pages/analysis/ModelTrain.vue'),
         meta: {
-          label: '异常事件',
-          icon: ''
-        }
-      },
-      {
-        name: 'OperationLog',
-        path: 'operationLog',
-        component: () => import('pages/event/OperationLog.vue'),
-        meta: {
-          label: '操作日志',
-          icon: ''
-        }
-      }
-    ]
-  },
-  {
-    path: '/diagram',
-    redirect: '/diagram/electricity',
-    component: () => import('layouts/MainLayout.vue'),
-    meta: {
-      label: '曲线',
-      icon: 'mdi-vector-curve'
-    },
-    children: [
-      {
-        name: 'Electricity',
-        path: 'electricity',
-        component: () => import('pages/diagram/Electricity.vue'),
-        meta: {
-          label: '电力监控',
-          icon: ''
-        }
-      },
-      {
-        name: 'Transformer',
-        path: 'transformer',
-        component: () => import('pages/diagram/Transformer.vue'),
-        meta: {
-          label: '变压器监控',
-          icon: ''
-        }
-      }
-    ]
-  },
-  {
-    path: '/report',
-    component: () => import('layouts/MainLayout.vue'),
-    meta: {
-      label: '报表统计',
-      icon: 'mdi-file-table-box-multiple-outline'
-    },
-    children: [
-      {
-        name: 'Report',
-        path: '',
-        component: () => import('pages/report/'),
-        meta: {
-          label: '报表统计',
-          icon: ''
-        }
-      },
-      {
-        name: 'DemandMonitoring',
-        path: 'demandMonitoring',
-        component: () => import('pages/report/DemandMonitoring.vue'),
-        meta: {
-          label: '需量监控',
-          icon: ''
-        }
-      }
-    ]
-  },
-  {
-    path: '/dataManagement',
-    redirect: '/dataManagement/project',
-    component: () => import('layouts/MainLayout.vue'),
-    meta: {
-      label: '基础数据管理',
-      icon: 'mdi-database-cog-outline'
-    },
-    children: [
-      {
-        path: 'project',
-        component: () => import('pages/dataManagement/project.vue'),
-        meta: {
-          label: '项目管理',
-          icon: ''
-        }
-      },
-      {
-        path: 'plantStation',
-        component: () => import('pages/dataManagement/plantStation.vue'),
-        meta: {
-          label: '厂站管理',
-          icon: ''
-        }
-      },
-      {
-        path: 'device',
-        component: () => import('pages/dataManagement/device.vue'),
-        meta: {
-          label: '设备管理',
-          icon: ''
-        }
-      },
-      {
-        path: 'parameter',
-        component: () => import('pages/dataManagement/parameter.vue'),
-        meta: {
-          label: '参数管理',
+          label: 'modelTrain',
           icon: ''
         }
       }
@@ -189,40 +294,63 @@ const sidebarRoutes = [
   }
 ]
 
-import path from 'path'
-import isArray from 'lodash'
-
-const fn = routes => {
-  console.log(routes)
-  const r = []
-  const fn2 = (prePath, item) => {
-    const p = path.resolve(prePath, item.path)
-    if (item.children && isArray(item.children) && item.children.length > 0) item.children.forEach(e => fn2(p, e))
-    else {
-      r.push({
-        ...item,
-        path: p
-      })
-    }
-  }
-  routes.forEach(e => {
-    fn2('', e)
-  })
-  return r
-}
-const sidebarWhitelist = fn(sidebarRoutes)
-
-const routes = [
+const constantRoutes = [
   {
-    path: '/',
-    redirect: '/report'
+    path: '/user',
+    redirect: '/user/profile',
+    name: 'User',
+    // hidden: true,
+    component: () => import('layouts/MainLayout.vue'),
+    meta: {
+      label: 'settings',
+      icon: 'settings'
+    },
+    children: [
+      {
+        name: 'UserProfile',
+        path: 'profile',
+        component: () => import('pages/user/Profile.vue'),
+        meta: {
+          label: 'profile',
+          icon: 'user'
+        }
+      }
+    ]
   },
-  ...sidebarRoutes,
   {
+    name: 'Login',
+    path: '/Login',
+    component: () => import('pages/Login.vue')
+  },
+  {
+    name: 'Register',
+    path: '/Register',
+    component: () => import('pages/Register.vue')
+  },
+  // {
+  //   name: 'Display1',
+  //   path: '/display1',
+  //   component: () => import('pages/Display1.vue')
+  // },
+  // {
+  //   name: 'Display2',
+  //   path: '/display2',
+  //   component: () => import('pages/Display2.vue')
+  // },
+  {
+    name: 'NotFound',
     path: '/:catchAll(.*)*',
     component: () => import('pages/Error404.vue')
   }
 ]
 
-export { sidebarRoutes, sidebarWhitelist }
+const routes = [
+  ...sidebarRoutes,
+  ...constantRoutes
+]
+
+// console.log(allRoutesRouter)
+
+export { sidebarRoutes, constantRoutes }
+
 export default routes

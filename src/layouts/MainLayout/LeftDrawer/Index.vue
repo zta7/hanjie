@@ -1,5 +1,5 @@
 <template>
-  <q-drawer :model-value='true' side='left' bordered behavior='desktop' :mini='mini'>
+  <q-drawer :model-value='true' side='left' behavior='desktop' :mini='mini' v-bind='$store.state.component.leftDrawer'>
     <side-bar @update:mini='v => updateMini(v)' />
     <template #mini>
       <side-bar-mini @update:mini='v => updateMini(v)' />
@@ -10,7 +10,6 @@
 import SideBar from './Sidebar.vue'
 import SideBarMini from './SidebarMini.vue'
 import { ref } from 'vue'
-import { setCssVar } from 'quasar'
 
 export default {
   components: {

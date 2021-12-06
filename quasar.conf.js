@@ -8,6 +8,7 @@
 
 /* eslint-env node */
 const ESLintPlugin = require('eslint-webpack-plugin')
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin')
 const { configure } = require('quasar/wrappers')
 
 const path = require('path')
@@ -23,9 +24,13 @@ module.exports = configure(ctx => {
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli/boot-files
     boot: [
+      'fabric',
       'i18n',
       'axios',
-      'routes'
+      'routes',
+      'vee-validate',
+      'local',
+      'others'
     ],
 
     // https://v2.quasar.dev/quasar-cli/quasar-conf-js#Property%3A-css
@@ -73,16 +78,11 @@ module.exports = configure(ctx => {
           router: path.resolve(__dirname, './src/router'),
           utils: path.resolve(__dirname, './src/utils'),
           boot: path.resolve(__dirname, './src/boot'),
-          components: path.resolve(__dirname, './src/components')
-
-          // snapsvg: 'snapsvg/dist/snap.svg.js'
+          components: path.resolve(__dirname, './src/components'),
+          api: path.resolve(__dirname, './src/api'),
+          composition: path.resolve(__dirname, './src/composition')
         }
-        // cfg.module.rules.push(
-        //   {
-        //     test: require.resolve('snapsvg/dist/snap.svg.js'),
-        //     use: 'imports-loader?wrapper=window&additionalCode=module.exports=0;'
-        //   }
-        // )
+        cfg.plugins.push(new NodePolyfillPlugin())
       },
       // https://v2.quasar.dev/quasar-cli/handling-webpack
       // "chain" is a webpack-chain object https://github.com/neutrinojs/webpack-chain
@@ -117,7 +117,9 @@ module.exports = configure(ctx => {
       plugins: [
         'Dialog',
         'LocalStorage',
-        'AppFullscreen'
+        'AppFullscreen',
+        'LoadingBar',
+        'Notify'
       ]
     },
 

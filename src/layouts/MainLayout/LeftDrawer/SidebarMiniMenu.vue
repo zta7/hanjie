@@ -1,10 +1,11 @@
 <template>
   <q-menu
+    v-bind='$store.state.component.menu'
     @mouseenter='onMenuMouseenter'
     @mouseleave='onMenuMouseleave'>
     <q-list>
-      <q-item v-for='e in item.children' :key='e.path' clickable :to='e.children ? void 0 : path.resolve(prePath, e.path)' exact>
-        <q-item-section>{{ e.meta.label }}</q-item-section>
+      <q-item v-for='e in item.children' :key='e.path' clickable :to='e.children ? void 0 : path.resolve(prePath, e.path)' exact v-bind='$store.state.component.item'>
+        <q-item-section>{{ $t(`nav.${e.meta.label}`) }}</q-item-section>
         <q-item-section v-if='e.children' side>
           <q-icon name='keyboard_arrow_right' />
         </q-item-section>
@@ -15,12 +16,8 @@
 </template>
 <script>
 import { defineComponent, inject, ref } from 'vue'
-import sidebarMiniMenu from './SidebarMiniMenu'
 import path from 'path'
 export default defineComponent({
-  components: {
-    sidebarMiniMenu
-  },
   props: {
     item: [Object],
     prePath: {
